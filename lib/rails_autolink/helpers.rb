@@ -15,7 +15,7 @@ module RailsAutolink
         # <tt>:email_addresses</tt>, and <tt>:urls</tt>. If a block is given, each URL and
         # e-mail address is yielded and the result is used as the link text. By default the
         # text given is sanitized, you can override this behaviour setting the
-        # <tt>:sanitize</tt> option to false, or you can add options to the sanitization of 
+        # <tt>:sanitize</tt> option to false, or you can add options to the sanitization of
         # the text using the <tt>:sanitize_options</tt> option hash.
         #
         # ==== Examples
@@ -99,6 +99,7 @@ module RailsAutolink
                 # don't include trailing punctuation character as part of the URL
                 while href.sub!(/[^#{WORD_PATTERN}\/-]$/, '')
                   punctuation.push $&
+                  href = href.gsub(/(&gt;)$/, '')
                   if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
                     href << punctuation.pop
                     break

@@ -49,6 +49,13 @@ class TestRailsAutolink < MiniTest::Unit::TestCase
     assert_equal "{link: #{link3_result}}", auto_link("{link: #{link3_raw}}")
   end
 
+  def test_auto_link_inside_angle_brackets
+    link_raw = 'http://en.wikipedia.org/wiki/Monoid'
+    link_enclosed = '&lt;' + link_raw + '&gt;'
+    link_result = generate_result(link_enclosed, link_raw)
+    assert_equal link_result, auto_link(link_enclosed)
+  end
+
   def test_auto_link_with_options_hash
     assert_dom_equal 'Welcome to my new blog at <a href="http://www.myblog.com/" class="menu" target="_blank">http://www.myblog.com/</a>. Please e-mail me at <a href="mailto:me@email.com" class="menu" target="_blank">me@email.com</a>.',
       auto_link("Welcome to my new blog at http://www.myblog.com/. Please e-mail me at me@email.com.",
